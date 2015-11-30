@@ -1,0 +1,25 @@
+ball diameter: 2.25 in
+
+ball mass: 6 oz
+
+ball mass moment of inertia: 2/5 mR2
+
+ball-ball coefficient of friction (µ): 0.03-0.08
+
+ball-ball coefficient of restitution (e): 0.92-0.98
+
+ball-cloth coefficient of rolling resistance (µ): 0.005 - 0.015
+
+ball-cloth coefficient of sliding friction (µ): 0.15-0.4 (typical value: 0.2)
+
+ball-cloth spin deceleration rate: 5-15 rad/sec2
+
+ball-rail coefficient of restitution (e): 0.6-0.9
+
+ball-table coefficient of restitution (e): 0.5
+
+cue-tip-ball coefficient of friction (µ): 0.6
+
+cue-tip-ball coefficient of restitution (e): 0.71-0.75 (leather tip), 0.81-0.87 (phenolic tip) 
+
+Source: http://billiards.colostate.edu/threads/physics.html
