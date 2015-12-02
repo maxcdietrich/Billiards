@@ -1,7 +1,7 @@
 function timeSeries = simulateOneBall(initial_x, initial_y, initial_v, angle)
 
     %Given Values
-    rollingFrictionCoefficient = 0.01; % do more research
+    rollingFrictionCoefficient = 0.1; % do more research
     ballMass = 0.17; %Kg
     g = 9.8;    %m/s^2
     normalForce  =ballMass * g; %Newtons
@@ -9,19 +9,20 @@ function timeSeries = simulateOneBall(initial_x, initial_y, initial_v, angle)
     
     %chosen Values
     initial_time = 0; %seconds
-    final_time = 60; %seconds
-    time_step = 0.01; %seconds
+    final_time = 30; %seconds
+    time_step = 0.001; %seconds
+    tolerance = 0.0002; % threshold velocity to consider a ball stopped. m/s
     
     %caluclated values
     initial_vx = initial_v * cosd(angle);
     initial_vy = initial_v * sind(angle);
     
 
-    Time_all = (initial_time: time_step: final_time);
-    X_all = zeros(1, length(Time_all));
-    Y_all = zeros(1, length(Time_all));
-    Vx_all = zeros(1, length(Time_all));
-    Vy_all = zeros(1, length(Time_all));
+    Time_all = (initial_time: time_step: final_time)';
+    X_all = zeros(length(Time_all), 1);
+    Y_all = zeros(length(Time_all), 1);
+    Vx_all = zeros(length(Time_all), 1);
+    Vy_all = zeros(length(Time_all), 1);
     X_all(1) = initial_x;
     Y_all(1) = initial_y;
     Vx_all(1) = initial_vx;
@@ -30,25 +31,25 @@ function timeSeries = simulateOneBall(initial_x, initial_y, initial_v, angle)
         
     for t = 2:length(Time_all)
         
-        initial_vx = Vx_all(t);
-        initial_vy = Vy_all(t);
-        
-        %Friction
-        frictionForce = -rollingFrictionCoefficient * normalForce;
-        force_x = frictionForce * x_component(initial_vx, initial_vy);
-        force_y = frictionForce * y_component(initial_vx, initial_vy);
-        
-        
-        %netFlows
-        deltaX = initial_vx;
-        deltaY = initial_vy;
-        deltaVx = force_x/ballMass;
-        deltaVy = force_y/ballMass;
-        
+ 
         previous_x = X_all(t-1);
         previous_y = Y_all(t-1);
         previous_Vx = Vx_all(t-1);
         previous_Vy = Vy_all(t-1);
+        
+        %Friction
+        frictionForce = -rollingFrictionCoefficient * normalForce;
+        force_x = frictionForce * x_component(previous_Vx, previous_Vy);
+        force_y = frictionForce * y_component(previous_Vx, previous_Vy);
+        
+        
+        %netFlows
+        deltaX = previous_Vx;
+        deltaY = previous_Vy;
+        deltaVx = force_x/ballMass;
+        deltaVy = force_y/ballMass;
+        
+
         
         x = previous_x + deltaX * time_step;
         y = previous_y + deltaY * time_step;
@@ -56,20 +57,20 @@ function timeSeries = simulateOneBall(initial_x, initial_y, initial_v, angle)
         vy = previous_Vy + deltaVy * time_step;     
          
         
-        if (hasBallStopped(vx, vy))
-            break
+        if (hasBallStopped(vx, vy, tolerance))
+             break
         end
         if (isHittingTopWall(x, y, vx, vy, ball_radius))
-            vy = hitHorizontalWall(vy);
+            [vx, vy] = hitHorizontalWall(vx, vy);
         end
         if (isHittingBottomWall(x, y, vx, vy, ball_radius))
-            vy = hitHorizontalWall(vy);
+            [vx, vy] = hitHorizontalWall(vx, vy);
         end
         if (isHittingLeftWall(x, y, vx, vy, ball_radius))
-            vx = hitVerticalWall(vx);
+            [vx, vy] = hitVerticalWall(vx, vy);
         end
         if (isHittingRightWall(x, y, vx, vy, ball_radius))
-            vx = hitVerticalWall(vx);
+            [vx, vy] = hitVerticalWall(vx, vy);
         end
         
         X_all(t) = x;

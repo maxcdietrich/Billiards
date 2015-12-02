@@ -1,4 +1,4 @@
-function isBallStopped = hasBallStopped(vx, vy)
+function isBallStopped = hasBallStopped(vx, vy, tolerance)
 %   determines if a ball is stopped
-    isBallStopped = abs(vx) + abs(vy) == 0; 
+    isBallStopped = abs(vx) + abs(vy) <= tolerance; 
 end
