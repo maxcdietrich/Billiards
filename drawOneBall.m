@@ -1,4 +1,4 @@
-function drawOneBall(initial_x, initial_y, initial_v, initial_angle )
+function timeSeries = drawOneBall(initial_x, initial_y, initial_v, initial_angle )
     tic
     % profile on
     tableWallThickness = 0.1016; %in meters
@@ -14,11 +14,8 @@ function drawOneBall(initial_x, initial_y, initial_v, initial_angle )
     Vx = timeSeries(:,4);
     Vy = timeSeries(:,5);
 
-    Time(end)
-    % comet(X,Y)
-
-
-    animate_func(timeSeries)
+  
+animate_func(timeSeries)
 
     function animate_func(timeSeries)
         %timeseries is a multidimensional array
@@ -28,7 +25,7 @@ function drawOneBall(initial_x, initial_y, initial_v, initial_angle )
         Y = timeSeries(:,3,:);
         limits = [0, 3, 0, 3];
 
-        for i = 1:length(Time)
+        for i = 1: 2: length(Time)
             clf;
             axis(limits);
             hold on;

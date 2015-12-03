@@ -1,4 +1,4 @@
-function drawOneBall(initial_x, initial_y, initial_v, initial_angle )
+function timeSeries = drawTwoBalls(initial_x, initial_y, initial_v, initial_angle )
     tic
     % profile on
     tableWallThickness = 0.1016; %in meters
@@ -18,7 +18,7 @@ function drawOneBall(initial_x, initial_y, initial_v, initial_angle )
     % comet(X,Y)
 
 
-    animate_func(timeSeries)
+% animate_func(timeSeries)
 
     function animate_func(timeSeries)
         %timeseries is a multidimensional array
@@ -28,7 +28,7 @@ function drawOneBall(initial_x, initial_y, initial_v, initial_angle )
         Y = timeSeries(:,3,:);
         limits = [0, 3, 0, 3];
 
-        for i = 1:length(Time)
+        for i = 1: 2: length(Time)
             clf;
             axis(limits);
             hold on;
@@ -36,16 +36,23 @@ function drawOneBall(initial_x, initial_y, initial_v, initial_angle )
             drawnow;
         end
     end
-
+    
     function draw_func(X, Y)
+        drawTable(tableWidth, tableLength, tableWallThickness)
         number_of_balls = length(X);
-        Table = [
         for ball = 1 : number_of_balls
-            plot(X(ball), Y(ball), 'b.', 'MarkerSize', 10);
-
+            plot(X(ball), Y(ball), 'b.', 'MarkerSize', 20);
         end
     end
 
 
 
+end
+function drawTable(tableWidth, tableLength, tableWallThickness)
+        % draws a billiard table 
+        %subtract wall thickness twice to get distance from origin
+        upper_wall = tableLength - 2 * tableWallThickness;
+        right_wall = tableWidth - 2 * tableWallThickness;
+        table = [tableWallThickness, tableWallThickness, right_wall, upper_wall];
+        rectangle('Position', table, 'FaceColor', 'g')
 end

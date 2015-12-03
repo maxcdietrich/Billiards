@@ -1,4 +1,4 @@
-function timeSeries = simulateOneBall(initial_x, initial_y, initial_v, angle, tableWidth, tableLength, tableWallThickness)
+function timeSeries = simulateTwoBalls(Initial_X, Initial_Y, Initial_V, Angle, tableWidth, tableLength, tableWallThickness)
 
     %Given Values
     rollingFrictionCoefficient = 0.4; % do more research
@@ -14,19 +14,19 @@ function timeSeries = simulateOneBall(initial_x, initial_y, initial_v, angle, ta
     tolerance = 0.02; % threshold velocity to consider a ball stopped. m/s
     
     %caluclated values
-    initial_vx = initial_v * cosd(angle);
-    initial_vy = initial_v * sind(angle);
+    Initial_Vx = Initial_V * cosd(Angle);
+    Initial_Vy = Initial_V * sind(Angle);
+    number_of_balls = length(Initial_X);
     
-
     Time_all = (initial_time: time_step: final_time)';
-    X_all = zeros(length(Time_all), 1);
-    Y_all = zeros(length(Time_all), 1);
-    Vx_all = zeros(length(Time_all), 1);
-    Vy_all = zeros(length(Time_all), 1);
-    X_all(1) = initial_x;
-    Y_all(1) = initial_y;
-    Vx_all(1) = initial_vx;
-    Vy_all(1) = initial_vy;
+    X_all = zeros(length(Time_all), 1, number_of_balls);
+    Y_all = zeros(length(Time_all), 1, number_of_balls);
+    Vx_all = zeros(length(Time_all), 1, number_of_balls);
+    Vy_all = zeros(length(Time_all), 1, number_of_balls);
+    X_all(1) = Initial_X;
+    Y_all(1) = Initial_Y;
+    Vx_all(1) = Initial_Vx;
+    Vy_all(1) = Initial_Vy;
     
         
     for t = 2:length(Time_all)
@@ -98,6 +98,3 @@ function timeSeries = simulateOneBall(initial_x, initial_y, initial_v, angle, ta
        component = y / sqrt(x^2 +y^2);
     end
 end
-
-        
-        
