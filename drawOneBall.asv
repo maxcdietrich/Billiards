@@ -36,23 +36,16 @@ function drawOneBall(initial_x, initial_y, initial_v, initial_angle )
             drawnow;
         end
     end
-    
+
     function draw_func(X, Y)
-        drawTable(tableWidth, tableLength, tableWallThickness)
         number_of_balls = length(X);
+        Table = [
         for ball = 1 : number_of_balls
-            plot(X(ball), Y(ball), 'b.', 'MarkerSize', 20);
+            plot(X(ball), Y(ball), 'b.', 'MarkerSize', 10);
+
         end
     end
 
 
 
-end
-function drawTable(tableWidth, tableLength, tableWallThickness)
-        % draws a billiard table 
-        %subtract wall thickness twice to get distance from origin
-        upper_wall = tableLength - 2 * tableWallThickness;
-        right_wall = tableWidth - 2 * tableWallThickness;
-        table = [tableWallThickness, tableWallThickness, right_wall, upper_wall];
-        rectangle('Position', table, 'FaceColor', 'g')
 end
